@@ -1,0 +1,6 @@
+public
+dist
+build
+node_modules
+.next
+out

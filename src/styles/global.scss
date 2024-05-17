@@ -1,0 +1,67 @@
+@use 'text.scss' as *;
+@use 'layouts.scss' as *;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+* {
+    font-family: 'Inter', sans-serif;
+}
+
+h1,
+h2,
+h3 {
+    font-weight: bold;
+}
+
+h1 {
+    font-size: $title-large;
+}
+
+h2 {
+    font-size: $title-medium;
+}
+
+h3 {
+    font-size: $title-small;
+}
+
+p {
+    font-size: $regular;
+}
+
+a {
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+main {
+    @include content;
+}
+
+// .withTransitions {
+.g\:has-transitions {
+    transition: all;
+    transition-duration: 100ms;
+}
+
+// .hideOnTablet {
+// .g:hidden\:tablet {
+.g\:tablet\:hidden {
+    @include md {
+        display: none !important;
+    }
+}
+
+// .showOnTablet {
+.g\:mobile\:hidden {
+    @media (max-width: #{$screen-md - 1}) {
+        display: none !important;
+    }
+}
+
+.g\:rotate-180 {
+    transform: rotate(-180deg);
+}

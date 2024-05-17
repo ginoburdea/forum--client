@@ -41,21 +41,17 @@ main {
     @include content;
 }
 
-// .withTransitions {
 .g\:has-transitions {
     transition: all;
     transition-duration: 100ms;
 }
 
-// .hideOnTablet {
-// .g:hidden\:tablet {
 .g\:tablet\:hidden {
     @include md {
         display: none !important;
     }
 }
 
-// .showOnTablet {
 .g\:mobile\:hidden {
     @media (max-width: #{$screen-md - 1}) {
         display: none !important;

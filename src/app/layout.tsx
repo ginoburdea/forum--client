@@ -1,8 +1,6 @@
-import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-    title: 'Homepage',
-};
+import '@/styles/reset.css';
+import '@/styles/global.scss';
+import Navbar from '@/components/navbar';
 
 export default function RootLayout({
     children,
@@ -11,7 +9,10 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body>{children}</body>
+            <body>
+                <Navbar></Navbar>
+                <main>{children}</main>
+            </body>
         </html>
     );
 }

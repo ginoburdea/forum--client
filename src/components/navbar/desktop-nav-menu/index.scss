@@ -1,0 +1,6 @@
+@use '@/styles/layouts' as *;
+
+.desktop-nav-menu {
+    @include flexCenterBetween();
+    gap: 20px;
+}

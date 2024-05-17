@@ -1,0 +1,8 @@
+@use '@/styles/colors' as *;
+
+@mixin nav-link {
+    &:hover {
+        text-decoration: none;
+        background: $primary-border-dark;
+    }
+}

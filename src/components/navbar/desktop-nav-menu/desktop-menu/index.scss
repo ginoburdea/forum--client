@@ -1,0 +1,34 @@
+@use '@/styles/layouts' as *;
+@use '@/styles/colors' as *;
+@use '../../common' as *;
+
+.desktop-menu {
+    position: relative;
+    display: inline-block;
+}
+
+.desktop-menu-link {
+    @include flexCenterBetween;
+    gap: 10px;
+    color: $primary-background;
+
+    &.has-padding {
+        @include nav-link;
+        padding: 10px 20px;
+    }
+}
+
+.desktop-menu-children {
+    background: $primary-highlight;
+    position: absolute;
+    top: 30px;
+    right: 0;
+    width: max-content;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid $primary-placeholder;
+
+    & > :not(:last-child) {
+        border-bottom: 1px solid $primary-placeholder;
+    }
+}

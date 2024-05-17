@@ -1,0 +1,19 @@
+@use '@/styles/colors' as *;
+@use '@/styles/layouts' as *;
+
+.navbar {
+    @include flexCenterBetween;
+    @include content;
+
+    background: $primary-highlight;
+    color: $primary-background;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.logo:link,
+.logo:visited,
+.logo {
+    text-decoration: none;
+    color: $primary-background;
+}

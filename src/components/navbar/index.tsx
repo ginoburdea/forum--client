@@ -1,6 +1,4 @@
 'use client';
-import { loggedInSelector } from '@/utils/stores/auth';
-import { useAppSelector } from '@/utils/hooks';
 import { useState } from 'react';
 import Link from 'next/link';
 

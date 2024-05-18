@@ -5,5 +5,8 @@
         "plugin:perfectionist/recommended-natural",
         "plugin:perfectionist/recommended-line-length"
     ],
-    "plugins": ["perfectionist"]
+    "plugins": ["perfectionist", "unused-imports"],
+    "rules": {
+        "unused-imports/no-unused-imports": "error"
+    }
 }

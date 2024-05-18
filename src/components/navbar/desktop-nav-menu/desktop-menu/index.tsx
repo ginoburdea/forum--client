@@ -1,20 +1,21 @@
-import classNames from 'classnames';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useState, useEffect } from 'react';
 import { useDetectClickOutside } from 'react-detect-click-outside';
-import { Menu } from '../../types';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import classNames from 'classnames';
 import Image from 'next/image';
+import Link from 'next/link';
+
+import { Menu } from '../../types';
 import './index.scss';
 
 interface DesktopMenuProps {
-    menu: Menu;
     isChild?: boolean;
+    menu: Menu;
 }
 
 export default function DesktopMenu({
-    menu,
     isChild = false,
+    menu,
 }: DesktopMenuProps) {
     const [open, setOpen] = useState<boolean>(false);
 
@@ -33,25 +34,25 @@ export default function DesktopMenu({
             ref={clickOutsideRef}
         >
             <Link
-                href={menu.url || ''}
                 className={classNames([
                     'desktop-menu-link',
                     { 'has-padding': isChild },
                 ])}
                 onClick={menu.children ? () => setOpen(!open) : menu.handler}
+                href={menu.url || ''}
             >
                 <span>{menu.label}</span>
                 {menu.children && (
                     <Image
-                        key={menu.label}
-                        src="/img/arrow-down-white.png"
-                        height={12}
-                        width={12}
-                        alt="dropdown-arrow"
                         className={classNames([
                             'g:has-transitions',
                             { 'g:rotate-180': open },
                         ])}
+                        src="/img/arrow-down-white.png"
+                        alt="dropdown-arrow"
+                        key={menu.label}
+                        height={12}
+                        width={12}
                     />
                 )}
             </Link>

@@ -1,15 +1,16 @@
 import classNames from 'classnames';
 import Image from 'next/image';
+
 import './index.scss';
 
 interface MobileNavMenuHamburgerProps {
-    open: boolean;
     onChangeOpen: (newValue: boolean) => any;
+    open: boolean;
 }
 
 export default function MobileNavMenuHamburger({
-    open,
     onChangeOpen,
+    open,
 }: MobileNavMenuHamburgerProps) {
     return (
         <>
@@ -20,11 +21,11 @@ export default function MobileNavMenuHamburger({
                             ? '/img/x-icon-white.png'
                             : '/img/menu-icon-white.png'
                     }
-                    alt={open ? 'open-menu-icon' : 'close-menu-icon'}
                     className={classNames({ 'menu-icon-small': open })}
-                    width={24}
-                    height={24}
+                    alt={open ? 'open-menu-icon' : 'close-menu-icon'}
                     onClick={() => onChangeOpen(!open)}
+                    height={24}
+                    width={24}
                 />
             </div>
         </>

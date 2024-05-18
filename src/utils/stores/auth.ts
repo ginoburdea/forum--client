@@ -1,25 +1,26 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+
 import { RootState } from '.';
 
 export interface AuthState {
-    token?: string;
     expiration?: string;
+    token?: string;
 }
 
 const initialState: AuthState = {
-    token: undefined,
     expiration: undefined,
+    token: undefined,
 };
 
 export const authSlice = createSlice({
-    name: 'auth',
-    initialState,
     reducers: {
         updateAuth(state, { payload }: PayloadAction<AuthState>) {
             state.token = payload.token;
             state.expiration = payload.expiration;
         },
     },
+    initialState,
+    name: 'auth',
 });
 
 export const { updateAuth } = authSlice.actions;

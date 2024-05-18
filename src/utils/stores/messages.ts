@@ -13,8 +13,6 @@ const initialState: MessagesState = {
 };
 
 export const messagesSlice = createSlice({
-    name: 'messages',
-    initialState,
     reducers: {
         updateMessages(state, { payload }: PayloadAction<MessagesState>) {
             state.errTitle = payload.errTitle;
@@ -22,6 +20,8 @@ export const messagesSlice = createSlice({
             state.msg = payload.msg;
         },
     },
+    name: 'messages',
+    initialState,
 });
 
 export const { updateMessages } = messagesSlice.actions;

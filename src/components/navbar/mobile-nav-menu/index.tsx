@@ -1,25 +1,26 @@
 'use client'
-import { useEffect } from 'react';
-import classNames from 'classnames';
-import { usePathname } from 'next/navigation';
 import { useDetectClickOutside } from 'react-detect-click-outside';
-import './index.scss';
+import { loggedInSelector } from '@/utils/stores/auth';
+import { useAppSelector } from '@/utils/hooks';
+import { usePathname } from 'next/navigation';
+import classNames from 'classnames';
+import { useEffect } from 'react';
+
+import LoginWithGoogleButton from '../login-with-google-button';
 import { CommonNavMenuProps } from '../types';
 import MobileMenu from './mobile-menu';
-import LoginWithGoogleButton from '../login-with-google-button';
-import { useAppSelector } from '@/utils/hooks';
-import { loggedInSelector } from '@/utils/stores/auth';
+import './index.scss';
 
 interface MobileNavMenuProps extends CommonNavMenuProps {
-    open: boolean;
     onChangeOpen: (open: boolean) => any;
+    open: boolean;
 }
 
 export function MobileNavMenu({
-    open,
+    loggedInMenus,
     onChangeOpen,
     commonMenus,
-    loggedInMenus,
+    open,
 }: MobileNavMenuProps) {
     const loggedIn = useAppSelector(loggedInSelector);
 

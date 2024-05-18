@@ -1,16 +1,17 @@
-import { CommonNavMenuProps } from '../types';
-import classNames from 'classnames';
-import './index.scss';
-import DesktopMenu from './desktop-menu';
-import LoginWithGoogleButton from '../login-with-google-button';
-import { useAppSelector } from '@/utils/hooks';
 import { loggedInSelector } from '@/utils/stores/auth';
+import { useAppSelector } from '@/utils/hooks';
+import classNames from 'classnames';
+
+import LoginWithGoogleButton from '../login-with-google-button';
+import { CommonNavMenuProps } from '../types';
+import DesktopMenu from './desktop-menu';
+import './index.scss';
 
 interface DesktopNavMenuProps extends CommonNavMenuProps {}
 
 export const DesktopNavMenu = ({
-    commonMenus,
     loggedInMenus,
+    commonMenus,
 }: DesktopNavMenuProps) => {
     const loggedIn = useAppSelector(loggedInSelector);
 

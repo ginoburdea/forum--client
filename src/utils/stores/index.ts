@@ -1,14 +1,12 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import authReducer from './auth';
-import storage from 'redux-persist/lib/storage';
-import { persistStore, persistReducer } from 'redux-persist';
 import { encryptTransform } from 'redux-persist-transform-encrypt';
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
 import messagesReducer from './messages';
+import authReducer from './auth';
 
 const rootPersistConfig = {
-    key: 'root',
-    storage,
-    blacklist: ['messages'],
     transforms:
         process.env.NODE_ENV === 'production'
             ? [
@@ -17,11 +15,14 @@ const rootPersistConfig = {
                   }),
               ]
             : [],
+    blacklist: ['messages'],
+    key: 'root',
+    storage,
 };
 
 const rootReducer = combineReducers({
-    auth: authReducer,
     messages: messagesReducer,
+    auth: authReducer,
 });
 
 const persistedReducer = persistReducer(rootPersistConfig, rootReducer);

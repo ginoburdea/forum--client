@@ -1,9 +1,10 @@
 'use client';
-import { updateMessages } from '@/utils/stores/messages';
-import './index.scss';
 import { useAppDispatch, useAppSelector } from '@/utils/hooks';
+import { updateMessages } from '@/utils/stores/messages';
 import classNames from 'classnames';
 import { useEffect } from 'react';
+
+import './index.scss';
 
 export default function Message() {
     const dispatch = useAppDispatch();

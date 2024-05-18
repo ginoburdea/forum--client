@@ -1,14 +1,15 @@
 'use client';
-import { AuthState, updateAuth } from '@/utils/stores/auth';
+import { updateMessages, MessagesState } from '@/utils/stores/messages';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { updateAuth, AuthState } from '@/utils/stores/auth';
 import { useAppDispatch } from '@/utils/hooks';
-import { MessagesState, updateMessages } from '@/utils/stores/messages';
-import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
+
 import './index.scss';
 
 const handleAuthResponse = (
     authRes: any,
-): { auth?: AuthState; messages: MessagesState } => {
+): { messages: MessagesState; auth?: AuthState } => {
     if (!authRes) {
         return {
             messages: {
@@ -25,8 +26,8 @@ const handleAuthResponse = (
     ) {
         return {
             auth: {
-                token: parsedAuthRes.token,
                 expiration: parsedAuthRes.expiresAt,
+                token: parsedAuthRes.token,
             },
             messages: {
                 msg: 'Autentificat cu success',
@@ -71,9 +72,9 @@ export default function CompleteAuthPage() {
 
     useEffect(() => {
         const authRes = query.get('oAuthRes');
-        const { auth, messages } = handleAuthResponse(authRes);
+        const { messages, auth } = handleAuthResponse(authRes);
 
-        console.log({ authRes, auth, messages });
+        console.log({ messages, authRes, auth });
 
         if (auth) dispatch(updateAuth(auth));
         dispatch(updateMessages(messages));

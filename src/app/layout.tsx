@@ -1,12 +1,12 @@
 'use client';
-import '@/styles/reset.css';
-import '@/styles/global.scss';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistor, store } from '@/utils/stores';
+import Message from '@/components/message';
 import Navbar from '@/components/navbar';
 import { Provider } from 'react-redux';
-import { persistor, store } from '@/utils/stores';
-import { PersistGate } from 'redux-persist/integration/react';
-import Message from '@/components/message';
 import Script from 'next/script';
+import '@/styles/global.scss';
+import '@/styles/reset.css';
 
 export default function RootLayout({
     children,
@@ -17,7 +17,7 @@ export default function RootLayout({
         <html lang="en">
             <body>
                 <Provider store={store}>
-                    <PersistGate loading={null} persistor={persistor}>
+                    <PersistGate persistor={persistor} loading={null}>
                         <Navbar></Navbar>
                         <main>{children}</main>
                         <Message></Message>

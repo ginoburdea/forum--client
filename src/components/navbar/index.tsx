@@ -1,23 +1,24 @@
 'use client';
 import Link from 'next/link';
 import './index.scss';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { DesktopNavMenu } from './desktop-nav-menu';
-import { Menu } from './types';
+import { Menus } from './types';
 import MobileNavMenuHamburger from './mobile-nav-menu-hamburger';
 import { MobileNavMenu } from './mobile-nav-menu';
+import { useAppSelector } from '@/utils/hooks';
+import { loggedInSelector } from '@/utils/stores/auth';
 
 export default function Navbar() {
-    const [loggedIn, setLoggedIn] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-    const commonMenus: Menu[] = [
+    const commonMenus: Menus = [
         {
             label: 'Ultimele intrebari',
             url: '/',
         },
     ];
-    const loggedInMenus: Menu[] = [
+    const loggedInMenus: Menus = [
         {
             label: 'Profil',
             children: [
@@ -30,17 +31,6 @@ export default function Navbar() {
             ],
         },
     ];
-    const loggedOutMenus: Menu[] = [
-        {
-            label: 'Autenificare',
-            handler: () => alert('Authentificare'),
-        },
-    ];
-
-    const menus = useMemo(
-        () => [commonMenus, loggedIn ? loggedInMenus : loggedOutMenus].flat(),
-        [loggedIn, commonMenus, loggedInMenus, loggedOutMenus],
-    );
 
     return (
         <>
@@ -52,12 +42,16 @@ export default function Navbar() {
                     open={mobileMenuOpen}
                     onChangeOpen={setMobileMenuOpen}
                 />
-                <DesktopNavMenu menus={menus} />
+                <DesktopNavMenu
+                    commonMenus={commonMenus}
+                    loggedInMenus={loggedInMenus}
+                />
             </nav>
             <MobileNavMenu
                 open={mobileMenuOpen}
                 onChangeOpen={setMobileMenuOpen}
-                menus={menus}
+                commonMenus={commonMenus}
+                loggedInMenus={loggedInMenus}
             />
         </>
     );

@@ -10,3 +10,7 @@
 .hidden {
     display: none !important;
 }
+
+.google-button-container {
+    @include content;
+}

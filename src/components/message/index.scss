@@ -1,0 +1,49 @@
+@use '@/styles/colors' as *;
+@use '@/styles/layouts' as *;
+
+.message {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    padding: 10px;
+    background: #d8d8d8;
+
+    @include md() {
+        max-width: 33%;
+
+        margin-bottom: 10px;
+        margin-right: 10px;
+    }
+
+    &.has-error {
+        color: $primary-background;
+        background: #f15d5d;
+    }
+
+    &.has-success {
+        background: #5df176;
+    }
+}
+
+.message-loader {
+    height: 2px;
+    background: #000000;
+    opacity: 20%;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    animation-name: width-100-to-0;
+    animation-duration: 6s;
+    animation-timing-function: linear;
+}
+
+@keyframes width-100-to-0 {
+    from {
+        width: 100%;
+    }
+    to {
+        width: 0%;
+    }
+}

@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import classNames from 'classnames';
 import { useEffect } from 'react';
 
-import LoginWithGoogleButton from '../login-with-google-button';
+import LoginWithGoogleButton from '@/components/login-with-google-button';
 import { CommonNavMenuProps } from '../types';
 import MobileMenu from './mobile-menu';
 import './index.scss';

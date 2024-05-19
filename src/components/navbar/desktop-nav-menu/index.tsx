@@ -2,7 +2,7 @@ import { loggedInSelector } from '@/utils/stores/auth';
 import { useAppSelector } from '@/utils/hooks';
 import classNames from 'classnames';
 
-import LoginWithGoogleButton from '../login-with-google-button';
+import LoginWithGoogleButton from '@/components/login-with-google-button';
 import { CommonNavMenuProps } from '../types';
 import DesktopMenu from './desktop-menu';
 import './index.scss';

@@ -90,3 +90,11 @@ textarea:not([rows]) {
 :target {
     scroll-margin-block: 5ex;
 }
+
+/* Make sure the links don't change color if the user visited them in the past */
+a,
+a:visited,
+a:hover,
+a:active {
+    color: inherit;
+}

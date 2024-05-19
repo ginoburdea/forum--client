@@ -1,0 +1,37 @@
+@use '@/styles/colors' as *;
+@use '@/styles/text' as *;
+
+.transparent-dropdown {
+    gap: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    font-size: $small;
+}
+
+.transparent-dropdown-options {
+    background: $primary-placeholder;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    width: max-content;
+    max-width: 100%;
+    top: 24px;
+    left: 0;
+    border: 1px solid #f3b19b;
+
+    & > * {
+        padding: 5px 10px;
+
+        &:hover {
+            cursor: pointer;
+            background: #f3b19b;
+        }
+    }
+
+    & > :not(:last-child) {
+        border-bottom: 1px solid #f3b19b;
+    }
+}

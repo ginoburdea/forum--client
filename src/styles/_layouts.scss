@@ -1,0 +1,49 @@
+$screen-sm: 576px;
+$screen-md: 768px;
+$screen-lg: 992px;
+$screen-xl: 1200px;
+$screen-xxl: 1400px;
+
+@mixin md {
+    @media (min-width: #{$screen-md}) {
+        @content;
+    }
+}
+
+@mixin lg {
+    @media (min-width: #{$screen-lg}) {
+        @content;
+    }
+}
+
+@mixin xl {
+    @media (min-width: #{$screen-xl}) {
+        @content;
+    }
+}
+
+@mixin xxl {
+    @media (min-width: #{$screen-xxl}) {
+        @content;
+    }
+}
+
+@mixin content {
+    padding: 10px;
+
+    @include md {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    @include lg {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+}
+
+@mixin flexCenterBetween {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

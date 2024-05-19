@@ -1,0 +1,13 @@
+@use '@/styles/layouts' as *;
+@use '@/styles/colors' as *;
+@use '../../common' as *;
+
+.mobile-menu {
+    @include content;
+    @include nav-link;
+    @include flexCenterBetween;
+
+    background: $primary-highlight;
+    color: $primary-background;
+    border-top: 1px solid $primary-placeholder;
+}

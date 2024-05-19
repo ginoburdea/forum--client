@@ -1,0 +1,95 @@
+@use 'text.scss' as *;
+@use 'layouts.scss' as *;
+@use 'colors.scss' as *;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+* {
+    font-family: 'Inter', sans-serif;
+}
+
+h1,
+h2,
+h3 {
+    font-weight: bold;
+}
+
+h1 {
+    font-size: $title-large;
+}
+
+h2 {
+    font-size: $title-medium;
+}
+
+h3 {
+    font-size: $title-small;
+}
+
+p {
+    font-size: $regular;
+}
+
+.g\:text-sm {
+    font-size: $small;
+}
+
+a {
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+main {
+    @include content;
+}
+
+ul {
+    list-style-position: inside;
+}
+
+button {
+    padding: 10px 20px;
+    color: $primary-background;
+    border-radius: 2px;
+    background: $accent-regular;
+    outline: none;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+        background: $accent-dark;
+    }
+}
+
+.g\:has-transitions {
+    transition: all;
+    transition-duration: 100ms;
+}
+
+.g\:tablet\:hidden {
+    @include md {
+        display: none !important;
+    }
+}
+
+.g\:mobile\:hidden {
+    @media (max-width: #{$screen-md - 1}) {
+        display: none !important;
+    }
+}
+
+.g\:rotate-180 {
+    transform: rotate(-180deg);
+}
+
+.g\:link {
+    color: $accent-dark;
+
+    &:hover {
+        color: $accent-dark;
+        text-decoration: underline;
+    }
+}

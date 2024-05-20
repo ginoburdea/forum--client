@@ -59,8 +59,12 @@ button {
     border: none;
     cursor: pointer;
 
-    &:hover {
+    &:hover:not(:disabled) {
         background: $accent-dark;
+    }
+
+    &:disabled {
+        @extend .disabled-input;
     }
 }
 

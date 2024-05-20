@@ -1,7 +1,7 @@
 import { SWRConfiguration } from 'swr';
 import axios from 'axios';
 
-import { loggedInSelector } from './stores/auth';
+import { loggedInSelector, updateAuth } from './stores/auth';
 import { store } from './stores';
 
 const axiosInstance = axios.create({
@@ -26,6 +26,11 @@ const fetcher = async (url: string) => {
 };
 
 export const swrConfig: SWRConfiguration = {
+    onError(error) {
+        if (error.statusCode === 401) {
+            store.dispatch(updateAuth({}));
+        }
+    },
     revalidateOnReconnect: false,
     shouldRetryOnError: false,
     revalidateIfStale: false,

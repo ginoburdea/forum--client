@@ -29,8 +29,11 @@ export default function UpdateAccountPage() {
 
     const dispatch = useAppDispatch();
 
-    const { error: getProfileError, data: profileInfo } =
-        useSWR('/v1/auth/profile');
+    const {
+        isLoading: getProfileLoading,
+        error: getProfileError,
+        data: profileInfo,
+    } = useSWR('/v1/auth/profile');
 
     useEffect(() => {
         if (!profileInfo) return;
@@ -107,12 +110,14 @@ export default function UpdateAccountPage() {
                     onErrorChange={() =>
                         setFieldErrors((errors) => ({ ...errors, name: '' }))
                     }
+                    disabled={getProfileLoading || updateProfileLoading}
                     error={fieldErrors.name}
                     onChange={setName}
                     label="Nume"
                     value={name}
                 />
                 <InputField
+                    disabled={getProfileLoading || updateProfileLoading}
                     onErrorChange={() => {}}
                     onChange={setEmail}
                     label="Email"
@@ -145,7 +150,7 @@ export default function UpdateAccountPage() {
                     error={fieldErrors.repliesNotifications}
                     onChange={setRepliesNotifications}
                     value={repliesNotifications}
-                />{' '}
+                />
             </div>
             <button type="submit">Actualizeaza cont</button>
         </form>

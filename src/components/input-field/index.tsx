@@ -1,15 +1,17 @@
 'use client';
 import { InputProps } from '@/utils/types';
+import classNames from 'classnames';
 
 import './index.scss';
 
 export default function InputField({
     onErrorChange,
     onChange,
+    disabled,
     value,
     error,
     label,
-}: InputProps) {
+}: Omit<InputProps, 'loading'>) {
     return (
         <div className="g:mb-md">
             <p className="g:text-sm">{label}</p>
@@ -18,7 +20,11 @@ export default function InputField({
                     onChange(event.target.value);
                     onErrorChange('');
                 }}
-                className="input-field"
+                className={classNames(
+                    'input-field',
+                    disabled && 'disabled-input',
+                )}
+                disabled={disabled}
                 value={value}
                 type="text"
             />

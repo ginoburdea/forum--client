@@ -1,0 +1,9 @@
+@use '@/styles/colors' as *;
+
+.checkbox-container {
+    display: block;
+}
+
+.checkbox {
+    accent-color: $primary-highlight;
+}

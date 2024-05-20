@@ -1,5 +1,6 @@
 'use client';
 import InputField from '@/components/input-field';
+import Checkbox from '@/components/checkbox';
 
 import './page.scss';
 
@@ -20,6 +21,20 @@ export default function UpdateAccountPage() {
                     onErrorChange={() => {}}
                     onChange={() => {}}
                     label="Email"
+                    error=""
+                />
+                <Checkbox
+                    label="Subscribe to blah blah blah"
+                    onErrorChange={() => {}}
+                    onChange={() => {}}
+                    error="Required"
+                    value="false"
+                />
+                <Checkbox
+                    label="Subscribe to blah blah blah"
+                    onErrorChange={() => {}}
+                    onChange={() => {}}
+                    value="false"
                     error=""
                 />
             </div>

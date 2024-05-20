@@ -1,13 +1,7 @@
 'use client';
-import './index.scss';
+import { InputProps } from '@/utils/types';
 
-interface InputFieldProps {
-    onErrorChange: (newValue: string) => any;
-    onChange: (newValue: string) => any;
-    value: string;
-    error: string;
-    label: string;
-}
+import './index.scss';
 
 export default function InputField({
     onErrorChange,
@@ -15,7 +9,7 @@ export default function InputField({
     value,
     error,
     label,
-}: InputFieldProps) {
+}: InputProps) {
     return (
         <div className="g:mb-md">
             <p className="g:text-sm">{label}</p>
@@ -28,7 +22,7 @@ export default function InputField({
                 value={value}
                 type="text"
             />
-            <p className="g:text-sm input-field-error">{error}</p>
+            <p className="g:text-sm g:text-red">{error}</p>
         </div>
     );
 }

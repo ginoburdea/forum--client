@@ -1,0 +1,17 @@
+@use '@/styles/colors' as *;
+
+.input-field {
+    padding: 5px 20px;
+    border: 2px solid $primary-border;
+    border-radius: 2px;
+    outline: none;
+    width: 100%;
+
+    &:focus {
+        border-color: $primary-border-dark;
+    }
+}
+
+.input-field-error {
+    color: #f15d5d;
+}

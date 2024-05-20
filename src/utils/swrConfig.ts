@@ -13,6 +13,7 @@ const axiosInstance = axios.create({
 interface InputWithMethod {
     method: string;
     url: string;
+    body: any;
 }
 
 const fetcher = async (input: InputWithMethod | string) => {
@@ -31,7 +32,14 @@ const fetcher = async (input: InputWithMethod | string) => {
         ? (input as InputWithMethod).method
         : 'GET';
 
-    const { status, data } = await axiosInstance({ headers, method, url });
+    const body: string = isObject(input) ? (input as InputWithMethod).body : '';
+
+    const { status, data } = await axiosInstance({
+        data: body,
+        headers,
+        method,
+        url,
+    });
 
     if (status < 200 || status >= 300) throw data;
     return data;

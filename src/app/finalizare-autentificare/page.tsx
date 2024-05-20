@@ -74,8 +74,6 @@ export default function CompleteAuthPage() {
         const authRes = query.get('oAuthRes');
         const { messages, auth } = handleAuthResponse(authRes);
 
-        console.log({ messages, authRes, auth });
-
         if (auth) dispatch(updateAuth(auth));
         dispatch(updateMessages(messages));
 

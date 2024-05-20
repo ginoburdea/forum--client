@@ -1,8 +1,9 @@
 'use client';
-import { updateMessages } from '@/utils/stores/messages';
+import {
+    updateMessagesFromHttpResponse,
+} from '@/utils/stores/messages';
 import { useAppDispatch } from '@/utils/hooks';
 import { useEffect, useState } from 'react';
-import { isObject } from '@/utils/isObject';
 import Link from 'next/link';
 import useSWR from 'swr';
 
@@ -59,77 +60,66 @@ export default function Questions({ ownQuestions }: QuestionsProps) {
     useEffect(() => {
         if (!questionsError) return;
 
-        const errMessage = isObject(questionsError.message)
-            ? Object.values(questionsError.message as object)[0]
-            : questionsError.message;
-
-        dispatch(
-            updateMessages({
-                errTitle: errMessage ? questionsError.error : undefined,
-                err: errMessage ? errMessage : questionsError.error,
-            }),
-        );
+        dispatch(updateMessagesFromHttpResponse(questionsError));
     }, [questionsError]);
 
-    if (questionsError) return null
+    if (questionsError) return null;
 
     return (
-         (
-            <>
-                <div className="g:mb-md">
-                    <TransparentDropdown
-                        onChange={(newValue) => {
-                            setLocalQuestions([]);
-                            setLastPage(-1);
-                            setSortBy(newValue);
-                        }}
-                        options={sortByOptions}
-                        value={sortBy}
-                    />
-                </div>
+        <>
+            <div className="g:mb-md">
+                <TransparentDropdown
+                    onChange={(newValue) => {
+                        setLocalQuestions([]);
+                        setLastPage(-1);
+                        setSortBy(newValue);
+                    }}
+                    options={sortByOptions}
+                    value={sortBy}
+                />
+            </div>
 
-                {localQuestions.length === 0 &&
-                    !questionsLoading &&
-                    (ownQuestions ? (
-                        <p>
-                            Nu ai postat nicio intrebare inca.{' '}
-                            <Link href="/posteaza-intrebare" className="g:link">
-                                Posteaza una acum!
-                            </Link>
-                        </p>
-                    ) : (
-                        <p>
-                            Nu a fost postata nicio intrebare inca.{' '}
-                            <Link href="/posteaza-intrebare" className="g:link">
-                                Fi primul care posteaza!
-                            </Link>
-                        </p>
-                    ))}
-
-                {localQuestions.map((question) => (
-                    <QuestionCard question={question} key={question.id} />
+            {localQuestions.length === 0 &&
+                !questionsLoading &&
+                (ownQuestions ? (
+                    <p>
+                        Nu ai postat nicio intrebare inca.{' '}
+                        <Link href="/posteaza-intrebare" className="g:link">
+                            Posteaza una acum!
+                        </Link>
+                    </p>
+                ) : (
+                    <p>
+                        Nu a fost postata nicio intrebare inca.{' '}
+                        <Link href="/posteaza-intrebare" className="g:link">
+                            Fi primul care posteaza!
+                        </Link>
+                    </p>
                 ))}
 
-                <div className="center">
-                    {questionsLoading ? (
-                        <p className="g:text-sm">Incarcare...</p>
-                    ) : hasNextPage ? (
-                        <button
-                            onClick={() => setLastPage(lastPage + 1)}
-                            disabled={!hasNextPage}
-                        >
-                            Incarca mai multe
-                        </button>
-                    ) : (
-                        localQuestions.length > 0 &&
-                        !questionsLoading && (
-                            <p className="g:text-sm">
-                                Se pare ca ai ajuns la finalul intrebarilor!
-                            </p>
-                        )
-                    )}
-                </div>
-            </>
-        )
+            {localQuestions.map((question) => (
+                <QuestionCard question={question} key={question.id} />
+            ))}
+
+            <div className="center">
+                {questionsLoading ? (
+                    <p className="g:text-sm">Incarcare...</p>
+                ) : hasNextPage ? (
+                    <button
+                        onClick={() => setLastPage(lastPage + 1)}
+                        disabled={!hasNextPage}
+                    >
+                        Incarca mai multe
+                    </button>
+                ) : (
+                    localQuestions.length > 0 &&
+                    !questionsLoading && (
+                        <p className="g:text-sm">
+                            Se pare ca ai ajuns la finalul intrebarilor!
+                        </p>
+                    )
+                )}
+            </div>
+        </>
     );
 }

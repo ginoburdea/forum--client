@@ -2,6 +2,7 @@ import { SWRConfiguration } from 'swr';
 import axios from 'axios';
 
 import { loggedInSelector, updateAuth } from './stores/auth';
+import { isObject } from './isObject';
 import { store } from './stores';
 
 const axiosInstance = axios.create({
@@ -9,17 +10,28 @@ const axiosInstance = axios.create({
     validateStatus: () => true,
 });
 
-const fetcher = async (url: string) => {
+interface InputWithMethod {
+    method: string;
+    url: string;
+}
+
+const fetcher = async (input: InputWithMethod | string) => {
     const state = store.getState();
     const isLoggedIn = loggedInSelector(state);
 
-    const { status, data } = await axiosInstance.get(url, {
-        headers: {
-            authorization: isLoggedIn
-                ? 'Bearer ' + state.auth?.token
-                : undefined,
-        },
-    });
+    const headers = isLoggedIn
+        ? { authorization: 'Bearer ' + state.auth?.token }
+        : {};
+
+    const url: string = isObject(input)
+        ? (input as InputWithMethod).url
+        : (input as string);
+
+    const method: string = isObject(input)
+        ? (input as InputWithMethod).method
+        : 'GET';
+
+    const { status, data } = await axiosInstance({ headers, method, url });
 
     if (status < 200 || status >= 300) throw data;
     return data;

@@ -1,5 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
+import { isObject } from '../isObject';
+
 export interface MessagesState {
     errTitle?: string;
     err?: string;
@@ -14,6 +16,14 @@ const initialState: MessagesState = {
 
 export const messagesSlice = createSlice({
     reducers: {
+        updateMessagesFromHttpResponse(state, { payload }) {
+            const errMessage = isObject(payload.message)
+                ? Object.values(payload.message as object)[0]
+                : payload.message;
+
+            state.errTitle = errMessage ? payload.error : undefined;
+            state.err = errMessage ? errMessage : payload.error;
+        },
         updateMessages(state, { payload }: PayloadAction<MessagesState>) {
             state.errTitle = payload.errTitle;
             state.err = payload.err;
@@ -24,5 +34,6 @@ export const messagesSlice = createSlice({
     initialState,
 });
 
-export const { updateMessages } = messagesSlice.actions;
+export const { updateMessagesFromHttpResponse, updateMessages } =
+    messagesSlice.actions;
 export default messagesSlice.reducer;

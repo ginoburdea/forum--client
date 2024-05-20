@@ -105,8 +105,8 @@ export default function UpdateAccountPage() {
 
     return (
         <form className="update-account-page" onSubmit={updateAccount}>
-            <h1 className="g:mb-lg">Actualizeaza cont</h1>
-            <div className="g:mb-lg">
+            <h1 className="g:mb-md">Actualizeaza cont</h1>
+            <div className="g:mb-md">
                 <InputField
                     onErrorChange={() =>
                         setFieldErrors((errors) => ({ ...errors, name: '' }))
@@ -127,7 +127,7 @@ export default function UpdateAccountPage() {
                 />
             </div>
             <div className="g:mb-lg">
-                <p className="g:mb-md g:text-bold">Notificari prin email</p>
+                <p className="g:mb-sm g:text-bold">Notificari prin email</p>
                 <Checkbox
                     onErrorChange={() =>
                         setFieldErrors((errors) => ({

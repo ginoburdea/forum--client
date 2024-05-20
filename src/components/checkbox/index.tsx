@@ -11,7 +11,7 @@ export default function Checkbox({
     label,
 }: InputProps<boolean>) {
     return (
-        <div className="g:mb-md">
+        <div className="g:mb-sm">
             <label className="checkbox-container ">
                 <input
                     onChange={(event) => {

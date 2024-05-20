@@ -13,7 +13,7 @@ export default function InputField({
     label,
 }: Omit<InputProps, 'loading'>) {
     return (
-        <div className="g:mb-md">
+        <div className="g:mb-sm">
             <p className="g:text-sm">{label}</p>
             <input
                 onChange={(event) => {

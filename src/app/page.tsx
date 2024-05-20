@@ -14,14 +14,14 @@ export default function Home() {
         <>
             {!isLoggedIn && (
                 <div className="promo-card g:mb-lg">
-                    <div className="g:mb-lg">
-                        <h1 className="g:mb-md">Bun venit la „Tema e grea”</h1>
+                    <div className="g:mb-md">
+                        <h1 className="g:mb-sm">Bun venit la „Tema e grea”</h1>
                         <p>
                             Aici poti gasi si posta intrebari la cele mai
                             dificile teme si ceilalti membri iti vor raspunde!
                         </p>
                     </div>
-                    <div className="g:mb-lg">
+                    <div className="g:mb-md">
                         <p>
                             Simte-te liber sa explorezi site-ul. Cand esti
                             pregatit sa

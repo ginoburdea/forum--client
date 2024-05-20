@@ -66,7 +66,7 @@ export default function Questions({ ownQuestions }: QuestionsProps) {
 
     return (
         <>
-            <div className="g:mb-md">
+            <div className="g:mb-sm">
                 <TransparentDropdown
                     onChange={(newValue) => {
                         setLocalQuestions([]);

@@ -1,7 +1,5 @@
 'use client';
-import {
-    updateMessagesFromHttpResponse,
-} from '@/utils/stores/messages';
+import { updateMessagesFromHttpResponse } from '@/utils/stores/messages';
 import { useAppDispatch } from '@/utils/hooks';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
@@ -9,6 +7,7 @@ import useSWR from 'swr';
 
 import QuestionCard, { Question } from '../question-card';
 import TransparentDropdown from '../transparent-dropdown';
+import Button from '../button';
 import './index.scss';
 
 const useQuestions = (ownQuestions: boolean, page: number, sortBy: string) => {
@@ -102,15 +101,12 @@ export default function Questions({ ownQuestions }: QuestionsProps) {
             ))}
 
             <div className="center">
-                {questionsLoading ? (
-                    <p className="g:text-sm">Incarcare...</p>
-                ) : hasNextPage ? (
-                    <button
+                {hasNextPage ? (
+                    <Button
                         onClick={() => setLastPage(lastPage + 1)}
-                        disabled={!hasNextPage}
-                    >
-                        Incarca mai multe
-                    </button>
+                        loading={questionsLoading}
+                        label="Incarca mai multe"
+                    />
                 ) : (
                     localQuestions.length > 0 &&
                     !questionsLoading && (

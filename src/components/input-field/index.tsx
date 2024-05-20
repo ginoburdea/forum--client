@@ -22,7 +22,7 @@ export default function InputField({
                 }}
                 className={classNames(
                     'input-field',
-                    disabled && 'disabled-input',
+                    disabled && 'g:disabled-input',
                 )}
                 disabled={disabled}
                 value={value}

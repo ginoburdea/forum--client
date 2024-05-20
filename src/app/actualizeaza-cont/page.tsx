@@ -8,6 +8,7 @@ import InputField from '@/components/input-field';
 import { useAppDispatch } from '@/utils/hooks';
 import Checkbox from '@/components/checkbox';
 import { isObject } from '@/utils/isObject';
+import Button from '@/components/button';
 import useSWR from 'swr';
 
 import './page.scss';
@@ -152,7 +153,11 @@ export default function UpdateAccountPage() {
                     value={repliesNotifications}
                 />
             </div>
-            <button type="submit">Actualizeaza cont</button>
+            <Button
+                loading={getProfileLoading || updateProfileLoading}
+                label="Actualizeaza cont"
+                type="submit"
+            />
         </form>
     );
 }

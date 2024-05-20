@@ -1,0 +1,15 @@
+@use '@/styles/colors.scss' as *;
+
+.button {
+    padding: 10px 20px;
+    color: $primary-background;
+    border-radius: 2px;
+    background: $accent-regular;
+    outline: none;
+    border: none;
+    cursor: pointer;
+
+    &:hover:not(:disabled):not(.g\:loading-input) {
+        background: $accent-dark;
+    }
+}

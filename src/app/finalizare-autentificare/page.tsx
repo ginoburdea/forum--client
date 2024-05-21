@@ -81,7 +81,7 @@ export default function CompleteAuthPage() {
     }, [dispatch, query, router]);
 
     return (
-        <div className="center">
+        <div className="g:py-md">
             <p>Incarcare...</p>
         </div>
     );

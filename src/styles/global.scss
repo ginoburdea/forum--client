@@ -72,7 +72,7 @@ ul {
 }
 
 .g\:link {
-    color: $accent-dark;
+    color: $accent-dark !important;
 
     &:hover {
         color: $accent-dark;
@@ -108,4 +108,9 @@ ul {
 .g\:loading-input {
     opacity: 0.7;
     cursor: progress !important;
+}
+
+.g\:py-md {
+    padding-top: 20px;
+    padding-bottom: 20px;
 }

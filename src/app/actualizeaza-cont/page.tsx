@@ -11,8 +11,6 @@ import { isObject } from '@/utils/isObject';
 import Button from '@/components/button';
 import useSWR from 'swr';
 
-import './page.scss';
-
 export default function UpdateAccountPage() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -104,7 +102,7 @@ export default function UpdateAccountPage() {
     if (getProfileError) return null;
 
     return (
-        <form className="update-account-page" onSubmit={updateAccount}>
+        <form onSubmit={updateAccount} className="g:py-md">
             <h1 className="g:mb-md">Actualizeaza cont</h1>
             <div className="g:mb-md">
                 <InputField

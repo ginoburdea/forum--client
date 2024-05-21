@@ -1,7 +1,6 @@
+import { formatDate } from '@/utils/formatDate';
 import Image from 'next/image';
 import Link from 'next/link';
-import dayjs from 'dayjs';
-import 'dayjs/locale/ro';
 
 import './index.scss';
 
@@ -42,11 +41,7 @@ export default function QuestionCard({ question }: QuestionCardProps) {
 
                 <div className="question-card-meta">
                     <p className="g:text-sm">{question.answers} raspunsuri</p>
-                    <p className="g:text-sm">
-                        {dayjs(question.postedAt)
-                            .locale('ro')
-                            .format('D MMM, HH:mm')}
-                    </p>
+                    <p className="g:text-sm">{formatDate(question.postedAt)}</p>
                 </div>
             </div>
         </Link>

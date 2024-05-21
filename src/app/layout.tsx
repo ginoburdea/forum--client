@@ -1,5 +1,6 @@
 'use client';
 import { PersistGate } from 'redux-persist/integration/react';
+import { SkeletonTheme } from 'react-loading-skeleton';
 import { persistor, store } from '@/utils/stores';
 import { swrConfig } from '@/utils/swrConfig';
 import Message from '@/components/message';
@@ -23,13 +24,19 @@ export default function RootLayout({
                 <Provider store={store}>
                     <PersistGate persistor={persistor} loading={null}>
                         <SWRConfig value={swrConfig}>
-                            <Navbar></Navbar>
-                            <main className="main-layout">{children}</main>
-                            <Message></Message>
-                            <Script
-                                src="https://accounts.google.com/gsi/client"
-                                async
-                            />
+                            <SkeletonTheme
+                                highlightColor="#e6e6e6"
+                                baseColor="#ffffff"
+                                borderRadius={0}
+                            >
+                                <Navbar></Navbar>
+                                <main className="main-layout">{children}</main>
+                                <Message></Message>
+                                <Script
+                                    src="https://accounts.google.com/gsi/client"
+                                    async
+                                />
+                            </SkeletonTheme>
                         </SWRConfig>
                     </PersistGate>
                 </Provider>

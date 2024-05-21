@@ -1,0 +1,19 @@
+@use '@/styles/layouts' as *;
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.w-1\/4 {
+    width: 25%;
+}
+
+.card-footer {
+    @include flexCenterBetween;
+}

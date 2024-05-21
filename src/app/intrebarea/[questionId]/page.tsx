@@ -1,25 +1,53 @@
 'use client';
 import { updateMessagesFromHttpResponse } from '@/utils/stores/messages';
+import TransparentDropdown from '@/components/transparent-dropdown';
 import 'react-loading-skeleton/dist/skeleton.css';
-import { formatDate } from '@/utils/formatDate';
 import { useAppDispatch } from '@/utils/hooks';
-import Skeleton from 'react-loading-skeleton';
 import { useParams } from 'next/navigation';
-import { useEffect } from 'react';
-import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import Button from '@/components/button';
+import { IAnswer } from '@/utils/types';
+import Card from '@/components/card';
 import useSWR from 'swr';
 
 import './page.scss';
 
 export default function QuestionPage() {
+    const dispatch = useAppDispatch();
     const { questionId } = useParams();
+
+    const answersSortOptions = [
+        { label: 'Cele mai noi', value: 'newest' },
+        { label: 'Cele mai vechi', value: 'oldest' },
+    ];
+
     const {
         isLoading: questionLoading,
         error: questionError,
         data: question,
     } = useSWR(`/v1/questions/${questionId}`);
 
-    const dispatch = useAppDispatch();
+    const [localAnswers, setLocalAnswers] = useState<IAnswer[]>([]);
+
+    const [answersPage, setAnswersPage] = useState(0);
+    const [answersSort, setAnswersSort] = useState('newest');
+
+    const [hasMore, setHasMore] = useState(true);
+
+    const {
+        isLoading: answersLoading,
+        error: answersError,
+        data: answers,
+    } = useSWR(
+        `/v1/questions/${questionId}/answers?page=${answersPage}&sort=${answersSort}`,
+    );
+
+    useEffect(() => {
+        if (!answers) return;
+
+        setLocalAnswers((prev) => [...prev, ...(answers.answers as IAnswer[])]);
+        setHasMore(answers.hasMore);
+    }, [answers]);
 
     useEffect(() => {
         if (!questionError) return;
@@ -27,63 +55,53 @@ export default function QuestionPage() {
         dispatch(updateMessagesFromHttpResponse(questionError));
     }, [questionError]);
 
-    if (questionError) return null;
+    useEffect(() => {
+        if (!answersError) return;
+
+        dispatch(updateMessagesFromHttpResponse(answersError));
+    }, [answersError]);
+
+    if (questionError || answersError) return null;
 
     return (
         <>
-            <div className="g:promo-card g:mb-lg">
-                <div className="question-header g:mb-md">
-                    {questionLoading ? (
-                        <Skeleton height={32} width={32} />
-                    ) : (
-                        <Image
-                            src={question.authorPhoto}
-                            alt="author-profile-photo"
-                            height={32}
-                            width={32}
+            <Card loading={questionLoading} data={question} />
+            {answersLoading ? (
+                Array(3)
+                    .fill(null)
+                    .map((_, index) => (
+                        <Card size="small" key={index} loading />
+                    ))
+            ) : localAnswers.length === 0 ? (
+                <></>
+            ) : (
+                <>
+                    <div className="g:mb-sm">
+                        <TransparentDropdown
+                            onChange={(newValue) => {
+                                setLocalAnswers([]);
+                                setAnswersSort(newValue);
+                            }}
+                            options={answersSortOptions}
+                            value={answersSort}
                         />
-                    )}
-                    <div className="w-full">
-                        <h3>
-                            {questionLoading ? (
-                                <Skeleton />
-                            ) : (
-                                question.authorName
-                            )}
-                        </h3>
                     </div>
-                </div>
-                <div className="g:mb-md">
-                    <p>
-                        {questionLoading ? (
-                            <Skeleton count={5} />
-                        ) : (
-                            question.text
-                        )}
-                    </p>
-                </div>
-                <div className="question-footer">
-                    {questionLoading ? (
-                        <div className="w-1/4">
-                            <Skeleton />
+                    {localAnswers.map((answer, index) => (
+                        <Card data={answer} size="small" key={index} />
+                    ))}
+                    {hasMore && (
+                        <div className="flex-center">
+                            <Button
+                                onClick={() =>
+                                    setAnswersPage((page) => page + 1)
+                                }
+                                label="Incarca mai multe"
+                                loading={answersLoading}
+                            />
                         </div>
-                    ) : (
-                        <p className="g:text-sm">
-                            {question.answers} raspunsuri
-                        </p>
                     )}
-
-                    {questionLoading ? (
-                        <div className="w-1/4">
-                            <Skeleton />
-                        </div>
-                    ) : (
-                        <p className="g:text-sm">
-                            {formatDate(question.postedAt)}
-                        </p>
-                    )}
-                </div>
-            </div>
+                </>
+            )}
         </>
     );
 }

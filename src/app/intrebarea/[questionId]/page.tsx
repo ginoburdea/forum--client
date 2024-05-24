@@ -33,7 +33,7 @@ export default function QuestionPage() {
     const [answersPage, setAnswersPage] = useState(0);
     const [answersSort, setAnswersSort] = useState('newest');
 
-    const [hasMore, setHasMore] = useState(true);
+    const [nextPage, setNextPage] = useState(true);
 
     const {
         isLoading: answersLoading,
@@ -47,7 +47,7 @@ export default function QuestionPage() {
         if (!answers) return;
 
         setLocalAnswers((prev) => [...prev, ...(answers.answers as IAnswer[])]);
-        setHasMore(answers.hasMore);
+        setNextPage(answers.nextPage);
     }, [answers]);
 
     useEffect(() => {
@@ -105,7 +105,7 @@ export default function QuestionPage() {
                             key={index}
                         />
                     ))}
-                    {hasMore && (
+                    {nextPage && (
                         <div className="flex-center">
                             <Button
                                 onClick={() =>

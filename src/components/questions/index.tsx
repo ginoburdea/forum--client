@@ -2,7 +2,6 @@
 import { updateMessagesFromHttpResponse } from '@/utils/stores/messages';
 import { useAppDispatch } from '@/utils/hooks';
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
 import useSWR from 'swr';
 
 import QuestionCard, { Question } from '../question-card';
@@ -66,34 +65,26 @@ export default function Questions({ ownQuestions }: QuestionsProps) {
 
     return (
         <>
-            <div className="g:mb-sm">
-                <TransparentDropdown
-                    onChange={(newValue) => {
-                        setLocalQuestions([]);
-                        setLastPage(-1);
-                        setSortBy(newValue);
-                    }}
-                    options={sortByOptions}
-                    value={sortBy}
-                />
-            </div>
+            {localQuestions.length > 0 && (
+                <div className="g:mb-sm">
+                    <TransparentDropdown
+                        onChange={(newValue) => {
+                            setLocalQuestions([]);
+                            setLastPage(-1);
+                            setSortBy(newValue);
+                        }}
+                        options={sortByOptions}
+                        value={sortBy}
+                    />
+                </div>
+            )}
 
             {localQuestions.length === 0 &&
                 !questionsLoading &&
                 (ownQuestions ? (
-                    <p>
-                        Nu ai postat nicio intrebare inca.{' '}
-                        <Link href="/posteaza-intrebare" className="g:link">
-                            Posteaza una acum!
-                        </Link>
-                    </p>
+                    <p>Nu ai postat nicio intrebare inca.</p>
                 ) : (
-                    <p>
-                        Nu a fost postata nicio intrebare inca.{' '}
-                        <Link href="/posteaza-intrebare" className="g:link">
-                            Fi primul care posteaza!
-                        </Link>
-                    </p>
+                    <p>Nu a fost postata nicio intrebare inca.</p>
                 ))}
 
             {localQuestions.map((question) => (

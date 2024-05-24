@@ -1,6 +1,7 @@
 'use client';
 import LoginWithGoogleButton from '@/components/login-with-google-button';
 import { useAppDispatch, useAppSelector } from '@/utils/hooks';
+import PostQuestionCard from '@/components/post-question-card';
 import { loggedInSelector } from '@/utils/stores/auth';
 import Questions from '@/components/questions';
 
@@ -34,6 +35,8 @@ export default function Home() {
                     <LoginWithGoogleButton />
                 </div>
             )}
+
+            <PostQuestionCard />
 
             <Questions ownQuestions={false} />
         </>

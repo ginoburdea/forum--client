@@ -9,7 +9,19 @@ import { useAppDispatch } from '@/utils/hooks';
 import Button from '@/components/button';
 import useSWR from 'swr';
 
-export default function PostQuestionCard() {
+interface PostQuestionOrAnswerCardProps {
+    serverBodyField: string;
+    successMsg: string;
+    inputLabel: string;
+    serverUrl: string;
+}
+
+export default function PostQuestionOrAnswerCard({
+    serverBodyField,
+    successMsg,
+    inputLabel,
+    serverUrl,
+}: PostQuestionOrAnswerCardProps) {
     const dispatch = useAppDispatch();
 
     const [postQuestionBody, setPostQuestionBody] = useState({});
@@ -24,7 +36,7 @@ export default function PostQuestionCard() {
     } = useSWR(
         {
             body: postQuestionBody,
-            url: `/v1/questions`,
+            url: serverUrl,
             method: 'POST',
         },
         { revalidateOnMount: false },
@@ -34,7 +46,7 @@ export default function PostQuestionCard() {
         if (!postQuestionRes) return;
 
         setPostQuestionText('');
-        dispatch(updateMessages({ msg: 'Intrebare postata cu succes!' }));
+        dispatch(updateMessages({ msg: successMsg }));
     }, [postQuestionRes]);
 
     useEffect(() => {
@@ -55,7 +67,10 @@ export default function PostQuestionCard() {
 
         if (postQuestionLoading) return;
 
-        setPostQuestionBody({ question: postQuestionText, time: Date.now() });
+        setPostQuestionBody({
+            [serverBodyField]: postQuestionText,
+            time: Date.now(),
+        });
     };
 
     return (
@@ -64,8 +79,8 @@ export default function PostQuestionCard() {
                 onErrorChange={setPostQuestionTextError}
                 onChange={setPostQuestionText}
                 error={postQuestionTextError}
-                label="Scrie o intrebare..."
                 value={postQuestionText}
+                label={inputLabel}
             />
             <Button label="Posteaza" type="submit" />
         </form>

@@ -1,14 +1,11 @@
 'use client';
-import {
-    updateMessagesFromHttpResponse,
-    updateMessages,
-} from '@/utils/stores/messages';
+import PostQuestionOrAnswerCard from '@/components/post-question-or-answer-card';
+import { updateMessagesFromHttpResponse } from '@/utils/stores/messages';
 import TransparentDropdown from '@/components/transparent-dropdown';
-import { DOMAttributes, useEffect, useState } from 'react';
 import 'react-loading-skeleton/dist/skeleton.css';
-import InputField from '@/components/input-field';
 import { useAppDispatch } from '@/utils/hooks';
 import { useParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import Button from '@/components/button';
 import { IAnswer } from '@/utils/types';
 import Card from '@/components/card';
@@ -46,31 +43,6 @@ export default function QuestionPage() {
         `/v1/questions/${questionId}/answers?page=${answersPage}&sort=${answersSort}`,
     );
 
-    const [postAnswerBody, setPostAnswerBody] = useState({});
-
-    const [postAnswerText, setPostAnswerText] = useState('');
-    const [postAnswerTextError, setPostAnswerTextError] = useState('');
-
-    const {
-        isLoading: postAnswerLoading,
-        error: postAnswerError,
-        data: postAnswerRes,
-    } = useSWR(
-        {
-            url: `/v1/questions/${questionId}/answers`,
-            body: postAnswerBody,
-            method: 'POST',
-        },
-        { revalidateOnMount: false },
-    );
-
-    useEffect(() => {
-        if (!postAnswerRes) return;
-
-        setPostAnswerText('');
-        dispatch(updateMessages({ msg: 'Raspuns postat cu succes!' }));
-    }, [postAnswerRes]);
-
     useEffect(() => {
         if (!answers) return;
 
@@ -90,41 +62,18 @@ export default function QuestionPage() {
         dispatch(updateMessagesFromHttpResponse(answersError));
     }, [answersError]);
 
-    useEffect(() => {
-        if (!postAnswerError) return;
-
-        if (postAnswerError?.message?.text) {
-            setPostAnswerTextError(postAnswerError.message.text);
-            return;
-        }
-
-        dispatch(updateMessagesFromHttpResponse(postAnswerError));
-    }, [postAnswerError]);
-
-    const postAnswer: DOMAttributes<HTMLFormElement>['onSubmit'] = (event) => {
-        event.preventDefault();
-
-        if (postAnswerLoading) return;
-
-        setPostAnswerBody({ text: postAnswerText, time: Date.now() });
-    };
-
     if (questionError || answersError) return null;
 
     return (
         <>
             <Card loading={questionLoading} data={question} />
 
-            <form onSubmit={postAnswer} className="g:mb-lg">
-                <InputField
-                    onErrorChange={setPostAnswerTextError}
-                    onChange={setPostAnswerText}
-                    label="Scrie un raspuns..."
-                    error={postAnswerTextError}
-                    value={postAnswerText}
-                />
-                <Button label="Posteaza" type="submit" />
-            </form>
+            <PostQuestionOrAnswerCard
+                serverUrl={`/v1/questions/${questionId}/answers`}
+                successMsg="Raspuns postat cu succes!"
+                inputLabel="Scrie un raspuns..."
+                serverBodyField="text"
+            />
 
             {answersLoading ? (
                 Array(3)

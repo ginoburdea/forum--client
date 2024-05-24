@@ -1,12 +1,11 @@
 'use client';
+import PostQuestionOrAnswerCard from '@/components/post-question-or-answer-card';
 import LoginWithGoogleButton from '@/components/login-with-google-button';
-import { useAppDispatch, useAppSelector } from '@/utils/hooks';
-import PostQuestionCard from '@/components/post-question-card';
 import { loggedInSelector } from '@/utils/stores/auth';
+import { useAppSelector } from '@/utils/hooks';
 import Questions from '@/components/questions';
 
 export default function Home() {
-    const dispatch = useAppDispatch();
     const isLoggedIn = useAppSelector(loggedInSelector);
 
     return (
@@ -36,7 +35,12 @@ export default function Home() {
                 </div>
             )}
 
-            <PostQuestionCard />
+            <PostQuestionOrAnswerCard
+                successMsg="Intrebare postata cu success!"
+                inputLabel="Scrie o intrebare..."
+                serverBodyField="question"
+                serverUrl="/v1/questions"
+            />
 
             <Questions ownQuestions={false} />
         </>

@@ -50,10 +50,6 @@ export default function Navbar() {
     ];
     const loggedInMenus: Menus = [
         {
-            label: 'Posteaza intrebare',
-            url: '/posteaza-intrebare',
-        },
-        {
             children: [
                 { label: 'Intrebarile mele', url: '/intrebarile-mele' },
                 { label: 'Actualizeaza cont', url: '/actualizeaza-cont' },

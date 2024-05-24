@@ -96,7 +96,14 @@ export default function QuestionPage() {
                         />
                     </div>
                     {localAnswers.map((answer, index) => (
-                        <Card data={answer} size="small" key={index} />
+                        <Card
+                            data={{
+                                ...answer,
+                                questionId: questionId as string,
+                            }}
+                            size="small"
+                            key={index}
+                        />
                     ))}
                     {hasMore && (
                         <div className="flex-center">

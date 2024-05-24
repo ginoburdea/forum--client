@@ -11,15 +11,19 @@ import useSWR from 'swr';
 
 interface PostQuestionOrAnswerCardProps {
     serverBodyField: string;
+    onSuccess?: () => any;
+    replyingTo?: string;
     successMsg: string;
     inputLabel: string;
     serverUrl: string;
 }
 
 export default function PostQuestionOrAnswerCard({
+    onSuccess = () => {},
     serverBodyField,
     successMsg,
     inputLabel,
+    replyingTo,
     serverUrl,
 }: PostQuestionOrAnswerCardProps) {
     const dispatch = useAppDispatch();
@@ -43,10 +47,13 @@ export default function PostQuestionOrAnswerCard({
     );
 
     useEffect(() => {
-        if (!postQuestionRes) return;
+        (async () => {
+            if (!postQuestionRes) return;
 
-        setPostQuestionText('');
-        dispatch(updateMessages({ msg: successMsg }));
+            setPostQuestionText('');
+            dispatch(updateMessages({ msg: successMsg }));
+            await onSuccess();
+        })();
     }, [postQuestionRes]);
 
     useEffect(() => {
@@ -70,6 +77,7 @@ export default function PostQuestionOrAnswerCard({
         setPostQuestionBody({
             [serverBodyField]: postQuestionText,
             time: Date.now(),
+            replyingTo,
         });
     };
 

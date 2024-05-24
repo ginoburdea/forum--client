@@ -11,7 +11,7 @@ export default function Home() {
     return (
         <>
             {!isLoggedIn && (
-                <div className="g:promo-card g:mb-lg">
+                <div className="g:promo-card-md g:mb-lg">
                     <div className="g:mb-md">
                         <h1 className="g:mb-sm">Bun venit la „Tema e grea”</h1>
                         <p>

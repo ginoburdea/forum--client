@@ -1,23 +1,30 @@
 import { formatDate } from '@/utils/formatDate';
 import Skeleton from 'react-loading-skeleton';
+import classNames from 'classnames';
 import { useState } from 'react';
 import Image from 'next/image';
 
 import PostQuestionOrAnswerCard from '../post-question-or-answer-card';
 import './index.scss';
 
+interface QuestionOrAnswer {
+    authorPhoto?: string;
+    authorName?: string;
+    postedAt?: string;
+    answers?: number;
+    text?: string;
+    id?: string;
+}
+
+interface CardData extends QuestionOrAnswer {
+    replyingToAnswer?: QuestionOrAnswer;
+    questionId?: string;
+}
+
 interface CardProps {
-    data?: {
-        authorPhoto?: string;
-        authorName?: string;
-        questionId?: string;
-        postedAt?: string;
-        answers?: number;
-        text?: string;
-        id?: string;
-    };
-    size?: 'regular' | 'small';
+    size?: 'extra-small' | 'regular' | 'small';
     loading?: boolean;
+    data?: CardData;
 }
 
 export default function Card({
@@ -30,12 +37,15 @@ export default function Card({
     return (
         <>
             <div
-                className={
-                    size === 'regular'
-                        ? 'g:promo-card g:mb-lg'
-                        : 'g:promo-card-light g:mb-sm'
-                }
+                className={classNames(
+                    size === 'regular' && 'g:promo-card-md g:mb-lg',
+                    size === 'small' && 'promo-card-sm g:mb-sm',
+                    size === 'extra-small' && 'promo-card-xs g:mb-lg',
+                )}
             >
+                {data?.replyingToAnswer && (
+                    <Card data={data.replyingToAnswer} size="extra-small" />
+                )}
                 <div className="card-header g:mb-md">
                     {loading ? (
                         <Skeleton height={32} width={32} />
@@ -77,12 +87,14 @@ export default function Card({
                         )
                     ) : (
                         <div>
-                            <a
-                                onClick={() => setShowReply((val) => !val)}
-                                className="g:link g:text-sm"
-                            >
-                                Raspunde
-                            </a>
+                            {size !== 'extra-small' && (
+                                <a
+                                    onClick={() => setShowReply((val) => !val)}
+                                    className="g:link g:text-sm"
+                                >
+                                    Raspunde
+                                </a>
+                            )}
                         </div>
                     )}
 
